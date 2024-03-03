@@ -5,7 +5,6 @@
 ```bash
  - name: Converter
  - description: A service  that allows users to convert EDI/JSON/XML 
-
 ```
 
 ## Description:
@@ -29,17 +28,16 @@
 ## Available Scripts
 
 ### `clone repo`:
-    https://github.com/DenysMakarov/Hatch_Front
-    https://github.com/DenysMakarov/Hatch_Back
+    https://github.com/DenysMakarov/orderful.git
+
+### `import Orderful.postman_collection.json ` 
+    to test using Postman (attached in the email or repo)
 
 ### `npm init` to install dependencies
 
-#### 
 ###  `npm dev` on localhost:5100 - Server
 
-## Additional INFO:
-### - Orderful.postman_collection.json will be provided for testing
-#### - need to import collection into Postman
+
 
 
 
