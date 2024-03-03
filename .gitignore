@@ -37,9 +37,9 @@ Thumbs.db
 # Environment files #
 .env
 .env.local
-.env.development.local
+.env.dev.local
 .env.test.local
-.env.production.local
+.env.prod.local
 
 # Build output #
 /dist
