@@ -12,7 +12,7 @@ const correctJSON = {
     ]
 };
 
-const inCorrectEdi = '~ProductID*4*8*15*16*23~ProductID*~';
+const inCorrectEdi = '~ProductID*4*8*4*15*16*23~ProductID*~';
 const inCorrectJSON = {
     "AddressID": [
         {"AddressID1": "42", "AddressID2": "108", "AddressID3": "3", "AddressID4": "14"}
