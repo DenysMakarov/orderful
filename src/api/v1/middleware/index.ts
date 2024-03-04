@@ -6,19 +6,23 @@ const ajv = new Ajv();
 
 const schema = {
     "type": "object",
-    "additionalProperties": {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "additionalProperties": {
-                "anyOf": [
-                    { "type": "string" },
-                    { "type": "number" }
-                ]
+    "additionalProperties": false,
+    "patternProperties": {
+        ".+": { // This regex matches any property with at least one character
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": {
+                    "anyOf": [
+                        { "type": "string" },
+                        { "type": "number" }
+                    ]
+                }
             }
         }
-    }
-};
+    },
+    "minProperties": 1
+}
 
 const validate = ajv.compile(schema);
 
@@ -42,24 +46,13 @@ class Middleware {
 
             }
     }
-
-
-    // public static validateJSON(req: Request, res: Response, next: NextFunction): void {
-    //         const json = req.body;
-    //         const isValid = validate(json);
-    //
-    //         if (!isValid) {
-    //             res.status(400).send('Invalid JSON format.');
-    //         } else {
-    //             next()
-    //         }
-    // }
-
     public static validateJSON(req: Request, res: Response, next: NextFunction): void {
         const json = req.body;
         const isValid = validate(json);
 
-        if (!isValid) {
+        console.log(req.body)
+
+        if (!isValid && json !== null) {
             res.status(400).send('Invalid JSON format.');
         } else {
             next()
