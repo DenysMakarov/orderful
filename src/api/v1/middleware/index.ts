@@ -23,6 +23,7 @@ const schema = {
 const validate = ajv.compile(schema);
 
 class Middleware {
+
     public static validateEDI(req: Request, res: Response, next: NextFunction):void{
         const EDIDoc = req.body;
             // Regular Expression Explanation:
@@ -43,16 +44,28 @@ class Middleware {
     }
 
 
-    public static validateJSON(req: Request, res: Response, next: NextFunction): void {
-            const json = req.body;
-            const isValid = validate(json);
+    // public static validateJSON(req: Request, res: Response, next: NextFunction): void {
+    //         const json = req.body;
+    //         const isValid = validate(json);
+    //
+    //         if (!isValid) {
+    //             res.status(400).send('Invalid JSON format.');
+    //         } else {
+    //             next()
+    //         }
+    // }
 
-            if (!isValid) {
-                res.status(400).send('Invalid JSON format.');
-            } else {
-                next()
-            }
+    public static validateJSON(req: Request, res: Response, next: NextFunction): void {
+        const json = req.body;
+        const isValid = validate(json);
+
+        if (!isValid) {
+            res.status(400).send('Invalid JSON format.');
+        } else {
+            next()
+        }
     }
+
 }
 
 export default Middleware;

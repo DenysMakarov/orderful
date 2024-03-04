@@ -11,7 +11,8 @@ export class ConverterController {
             const doc = ConverterService.convertEDIToJson(EDIDoc);
             res.status(200).json(doc);
         } catch (e) {
-            next(ApiError.invalid('Failed to convert EDI to JSON'))
+            next(ApiError.serverError('Failed to convert EDI to JSON'))
+            return;
         }
     }
 
