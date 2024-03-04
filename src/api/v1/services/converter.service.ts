@@ -22,7 +22,7 @@ import {Utils} from "../../../utils";
          return await Utils.xmlToJson(input);
      }
 
-     public static async convertXmlToEDI (input: string): Promise<any> {
+     public static async convertXmlToEDI (input: string): Promise<string> {
          return await Utils.xmlToEDI(input);
      }
 

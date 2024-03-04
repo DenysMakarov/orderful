@@ -36,8 +36,10 @@ class Middleware {
 
             if (!regex.test(EDIDoc)) {
                 res.status(400).send('Invalid EDI format.');
+            } else {
+                next()
+
             }
-            next()
     }
 
 
@@ -47,8 +49,9 @@ class Middleware {
 
             if (!isValid) {
                 res.status(400).send('Invalid JSON format.');
+            } else {
+                next()
             }
-             next()
     }
 }
 

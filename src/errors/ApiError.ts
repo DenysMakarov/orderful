@@ -1,10 +1,9 @@
 
-
 class ApiError extends Error {
     status: number;
     msg: string;
 
-    constructor(status = 500, msg = 'Something wrong with the server') {
+    constructor(status : number, msg = 'Something wrong with the server') {
         super();
         this.status = status;
         this.msg = msg;

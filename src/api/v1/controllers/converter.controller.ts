@@ -11,7 +11,7 @@ export class ConverterController {
             const doc = ConverterService.convertEDIToJson(EDIDoc);
             res.status(200).json(doc);
         } catch (e) {
-            next(ApiError.serverError('Failed to convert EDI to JSON'))
+            next(ApiError.invalid('Failed to convert EDI to JSON'))
         }
     }
 
@@ -27,7 +27,7 @@ export class ConverterController {
     }
 
 
-    public static convertDocumentJsonToXML(req: Request, res: Response, next: NextFunction): any {
+    public static convertDocumentJsonToXML(req: Request, res: Response, next: NextFunction): void {
         try {
             const jsonInput = req.body;
             const doc = ConverterService.convertJsonXML(jsonInput);
@@ -60,7 +60,7 @@ export class ConverterController {
         }
     }
 
-    public static async convertDocumentXMLToEDI(req: Request, res: Response, next: NextFunction): Promise<any> {
+    public static async convertDocumentXMLToEDI(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const xmlInput = req.body;
             const doc = await ConverterService.convertXmlToEDI(xmlInput);
