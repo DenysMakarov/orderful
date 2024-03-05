@@ -50,8 +50,6 @@ class Middleware {
         const json = req.body;
         const isValid = validate(json);
 
-        console.log(req.body)
-
         if (!isValid && json !== null) {
             res.status(400).send('Invalid JSON format.');
         } else {
