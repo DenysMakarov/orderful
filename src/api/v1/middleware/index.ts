@@ -1,5 +1,4 @@
 import {Request, Response, NextFunction} from 'express';
-import ApiError from "../../../errors/ApiError";
 
 import Ajv from "ajv";
 const ajv = new Ajv();
@@ -50,7 +49,7 @@ class Middleware {
         const json = req.body;
         const isValid = validate(json);
 
-        if (!isValid && json !== null) {
+        if (!isValid || json === null) {
             res.status(400).send('Invalid JSON format.');
         } else {
             next()

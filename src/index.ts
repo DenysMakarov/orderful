@@ -1,8 +1,8 @@
-require('dotenv').config({path: `.env.${process.env.NODE_ENV}`})
 import app from './app';
 import dotenv from 'dotenv';
-dotenv.config();
-
+const env = process.env.NODE_ENV;
+const envPath = env ? `.env.${env}` : '.env';
+dotenv.config({ path: envPath });
 
 
 const PORT: number = parseInt(process.env.PORT as string) || 5100;

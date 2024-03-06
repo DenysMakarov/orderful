@@ -65,6 +65,7 @@ export class ConverterController {
         try {
             const xmlInput = req.body;
             const doc = await ConverterService.convertXmlToEDI(xmlInput);
+            res.type('application/text');
             res.status(200).send(doc);
         } catch (e) {
             next(ApiError.serverError('Failed to convert XML to EDI'))
