@@ -3,20 +3,12 @@ import {EDIJsonObject, ParsedXmlRoot} from "../types/types";
 import NodeCache from "node-cache";
 
 export class Utils {
-    private static cache: NodeCache = new NodeCache({stdTTL: 300});
 
-    private static generateCacheKey(prefix: string, input: string): string {
+    public static generateCacheKey(prefix: string, input: string): string {
         return `${prefix}:${input}`;
     }
 
     public static EDIToJson(input: string): EDIJsonObject {
-        const cacheKey = this.generateCacheKey('EDIToJson', input);
-        const cachedResult = this.cache.get<EDIJsonObject>(cacheKey);
-
-        if (cachedResult) {
-            return cachedResult;
-        }
-
         const segments = input.trim().split('~');
         const result: EDIJsonObject = {};
 
@@ -37,21 +29,12 @@ export class Utils {
 
             result[key].push(obj);
         });
-        this.cache.set(cacheKey, result);
         return result;
     }
 
     public static EDIToXML(input: string): string {
-        const cacheKey = this.generateCacheKey('EDIToXML', input);
-        const cachedResult = this.cache.get<string>(cacheKey);
-
-        if (cachedResult) {
-            return cachedResult;
-        }
         const json = this.EDIToJson(input);
-        const xml = this.jsonToXML(json);
-        this.cache.set(cacheKey, xml);
-        return xml;
+        return this.jsonToXML(json);
     }
 
     public static jsonToXML(input: EDIJsonObject): string {
@@ -64,19 +47,11 @@ export class Utils {
     }
 
     public static jsonToEDI(input: EDIJsonObject): string {
-        const cacheKey = this.generateCacheKey('jsonToEDI', JSON.stringify(input));
-        const cachedResult = this.cache.get<string>(cacheKey);
-
-        if (cachedResult) {
-            return cachedResult;
-        }
-        const edi = Object.entries(input).flatMap(([segmentKey, segments]) =>
+        return Object.entries(input).flatMap(([segmentKey, segments]) =>
             segments.map(segment =>
                 `${segmentKey}*${Object.values(segment).join('*')}`
             )
         ).join('~') + '~';
-        this.cache.set(cacheKey, edi);
-        return edi;
     }
 
     private static normalizeToJsonArray(json: { root: ParsedXmlRoot }): void {
@@ -89,16 +64,8 @@ export class Utils {
     }
 
     public static async xmlToJson(xml: string): Promise<EDIJsonObject> {
-        const cacheKey = this.generateCacheKey('xmlToJson', xml);
-        const cachedResult = this.cache.get<EDIJsonObject>(cacheKey);
-
-        if (cachedResult) {
-            return cachedResult;
-        }
-
         const json = await parseStringPromise(xml, {explicitArray: false});
         this.normalizeToJsonArray(json);
-        this.cache.set(cacheKey, json);
         return json;
     }
 
